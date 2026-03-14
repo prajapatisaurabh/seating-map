@@ -30,9 +30,9 @@ export default function SeatMap() {
       const seat = seats.get(id);
       if (!seat) return;
       setFocused(seat);
-      if (seat.status === "SELECTED") {
+      if (seat.status === "selected") {
         deselectSeat(id);
-      } else if (seat.status === "AVALIABLE") {
+      } else if (seat.status === "available") {
         selectSeat(id);
       }
     },
@@ -51,9 +51,9 @@ export default function SeatMap() {
       const seat = seats.get(id);
       if (!seat) return;
       setFocused(seat);
-      if (seat.status === "SELECTED") {
+      if (seat.status === "selected") {
         deselectSeat(id);
-      } else if (seat.status === "AVALIABLE") {
+      } else if (seat.status === "available") {
         selectSeat(id);
       }
     },

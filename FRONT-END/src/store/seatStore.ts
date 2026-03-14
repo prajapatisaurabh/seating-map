@@ -41,7 +41,7 @@ export const useSeatStore = create<SeatStore>((set, get) => ({
     const selected = get().selected;
     data.sections.forEach((section) => {
       section.seats.forEach((seat) => {
-        const status = selected.has(seat.id) ? "SELECTED" : seat.status;
+        const status = selected.has(seat.id) ? "selected" : seat.status;
         seats.set(seat.id, { ...seat, status });
       });
     });
@@ -51,19 +51,19 @@ export const useSeatStore = create<SeatStore>((set, get) => ({
   selectSeat: (id: string) => {
     const { seats, selected } = get();
     const seat = seats.get(id);
-    if (!seat || seat.status === "UNAVALIABLE") return;
+    if (!seat || seat.status === "unavailable") return;
     if (selected.has(id)) return;
     if (selected.size >= MAX_SELECTION) return;
 
     const newSelected = new Set(selected);
     newSelected.add(id);
     const newSeats = new Map(seats);
-    newSeats.set(id, { ...seat, status: "SELECTED" });
+    newSeats.set(id, { ...seat, status: "selected" });
     saveSelected(newSelected);
     set({
       seats: newSeats,
       selected: newSelected,
-      focusedSeat: { ...seat, status: "SELECTED" },
+      focusedSeat: { ...seat, status: "selected" },
     });
   },
 
@@ -75,12 +75,12 @@ export const useSeatStore = create<SeatStore>((set, get) => ({
     const newSelected = new Set(selected);
     newSelected.delete(id);
     const newSeats = new Map(seats);
-    newSeats.set(id, { ...seat, status: "AVALIABLE" });
+    newSeats.set(id, { ...seat, status: "available" });
     saveSelected(newSelected);
     set({
       seats: newSeats,
       selected: newSelected,
-      focusedSeat: { ...seat, status: "AVALIABLE" },
+      focusedSeat: { ...seat, status: "available" },
     });
   },
 

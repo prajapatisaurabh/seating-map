@@ -19,10 +19,10 @@ const Seat = React.memo(function Seat({ seat }: Props) {
     <g
       role="button"
       aria-label={label}
-      tabIndex={seat.status !== "UNAVALIABLE" ? 0 : -1}
+      tabIndex={seat.status !== "unavailable" ? 0 : -1}
       data-seat-id={seat.id}
       style={{
-        cursor: seat.status !== "UNAVALIABLE" ? "pointer" : "default",
+        cursor: seat.status !== "unavailable" ? "pointer" : "default",
         outline: "none",
       }}
     >
@@ -31,7 +31,7 @@ const Seat = React.memo(function Seat({ seat }: Props) {
         cy={seat.y}
         r={5}
         fill={color}
-        stroke={seat.status === "SELECTED" ? "#1d4ed8" : "transparent"}
+        stroke={seat.status === "selected" ? "#1d4ed8" : "transparent"}
         strokeWidth={1.5}
       />
     </g>

@@ -1,4 +1,4 @@
-export type SeatStatus = "AVALIABLE" | "UNAVALIABLE" | "SELECTED";
+export type SeatStatus = "available" | "unavailable" | "selected";
 
 export interface Seat {
   id: string;
