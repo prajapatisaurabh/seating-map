@@ -1,17 +1,18 @@
-import express from "express";
-import cors from "cors";
-import { usersRouter } from "./routes/./users";
-import { cacheRouter } from "./routes/cacheRoutes";
+import http from "node:http";
+import { createServerApplication } from "./app";
+import { env } from "./env";
 
-const app = express();
-const PORT = 3001;
+async function main() {
+  try {
+    const server = http.createServer(createServerApplication());
+    const PORT: number = env.PORT ? +env.PORT : 3000;
 
-app.use(cors());
-app.use(express.json());
+    server.listen(PORT, () => {
+      console.log(`Server is running on PORT ${PORT}`);
+    });
+  } catch (error) {
+    throw error;
+  }
+}
 
-app.use("/users", usersRouter);
-app.use("/", cacheRouter);
-
-app.listen(PORT, () => {
-  console.log(`Backend running on http://localhost:${PORT}`);
-});
+main();

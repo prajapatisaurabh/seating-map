@@ -3,6 +3,12 @@ import { cache, responseTimes } from "./users";
 
 const router = Router();
 
+router.get("/", (_req: Request, res: Response) => {
+  return res.status(200).json({
+    message: "Server is up and Running ",
+  });
+});
+
 router.get("/cache-status", (_req: Request, res: Response) => {
   const avg =
     responseTimes.length > 0
