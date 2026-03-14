@@ -1,121 +1,83 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import SeatMap from "./components/SeatMap";
+import SeatDetail from "./components/seatdetail";
+import SelectionSummary from "./components/SelectionSummary";
+import { useVenue } from "./hooks/useVenue";
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const { loading } = useVenue();
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
+    <div
+      style={{
+        minHeight: "100vh",
+        background: "#0f172a",
+        color: "#f9fafb",
+        fontFamily: "system-ui, sans-serif",
+      }}
+    >
+      <header
+        style={{ padding: "16px 24px", borderBottom: "1px solid #1e293b" }}
+      >
+        <h1 style={{ margin: 0, fontSize: 20, fontWeight: 700 }}>
+          Event Seat Map
+        </h1>
+      </header>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 300px",
+          gap: 0,
+          height: "calc(100vh - 57px)",
+        }}
+      >
+        <main style={{ padding: 24, overflow: "auto" }}>
+          {loading ? (
+            <div
+              style={{ color: "#9ca3af", textAlign: "center", marginTop: 100 }}
+            >
+              Loading venue...
+            </div>
+          ) : (
+            <SeatMap />
+          )}
+          <div
+            style={{ marginTop: 16, display: "flex", gap: 16, fontSize: 13 }}
+          >
+            {[
+              { color: "#4ade80", label: "Available" },
+              { color: "#6b7280", label: "Unavailable" },
+              { color: "#3b82f6", label: "Selected" },
+            ].map(({ color, label }) => (
+              <div
+                key={label}
+                style={{ display: "flex", alignItems: "center", gap: 6 }}
+              >
+                <div
+                  style={{
+                    width: 12,
+                    height: 12,
+                    borderRadius: "50%",
+                    background: color,
+                  }}
+                />
+                <span style={{ color: "#9ca3af" }}>{label}</span>
+              </div>
+            ))}
+          </div>
+        </main>
+        <aside
+          style={{
+            borderLeft: "1px solid #1e293b",
+            display: "flex",
+            flexDirection: "column",
+            overflow: "auto",
+          }}
         >
-          Count is {count}
-        </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+          <SeatDetail />
+          <div style={{ borderTop: "1px solid #1e293b" }} />
+          <SelectionSummary />
+        </aside>
+      </div>
+    </div>
+  );
 }
-
-export default App
